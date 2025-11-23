@@ -1,0 +1,505 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "117bc29da4e93243505194bb4cf690c6",
+     "grade": false,
+     "grade_id": "Introduction",
+     "locked": true,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "source": [
+    "\n",
+    "# Required Codio activity: Web scraping in action\n",
+    "---\n",
+    "\n",
+    "## Overview\n",
+    "\n",
+    "In this activity, you will **write Python code to scrape data from a website** using standard libraries and techniques.\n",
+    "\n",
+    "This hands-on assignment is designed to:\n",
+    "- Strengthen your Python coding skills.\n",
+    "- Reinforce your understanding of key concepts covered in this module.\n",
+    "- Introduce you to the practical challenges of extracting structured data from unstructured web pages.\n",
+    "\n",
+    "As you progress through the tasks, they will gradually increase in complexity. Approach this like a programmer: break problems into smaller parts, test frequently, and debug as needed.\n",
+    "\n",
+    "> **Tip:** Run your code after completing each task to check for errors and ensure everything works before moving on.\n",
+    "\n",
+    "---\n",
+    "\n",
+    "### Learning Outcome\n",
+    "\n",
+    "- Successfully **scrape a website to extract data** using Python.\n",
+    "\n",
+    "\n",
+    "\n",
+    "**Please Note:** Since the data is being scraped from the internet, some information may change over time, which is beyond our control. This is expected and perfectly fine, and your submissions will be evaluated with that in mind."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "b6a405837f3eca9eb2d3816cf2dd76db",
+     "grade": false,
+     "grade_id": "Index",
+     "locked": true,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "source": [
+    "\n",
+    "\n",
+    "## Index:\n",
+    "\n",
+    "- [Question 1](#Question-1)\n",
+    "- [Question 2](#Question-2)\n",
+    "- [Question 3](#Question-3)\n",
+    "- [Question 4](#Question-4)\n",
+    "- [Question 5](#Question-5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "a67c08b844ea317631d27afabbd6d2de",
+     "grade": false,
+     "grade_id": "Q1_Description",
+     "locked": true,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "source": [
+    "###### [Back to top](#Index:) \n",
+    "\n",
+    "### Question 1: Access the Web Page\n",
+    "\n",
+    "In this task, you will begin scraping recipe data from the website **[epicurious.com](https://www.epicurious.com)**.\n",
+    "\n",
+    "#### Instructions\n",
+    "\n",
+    "1. Open a web browser and visit **https://www.epicurious.com**.\n",
+    "2. Inspect the page to get a sense of its structure — use developer tools to explore the HTML elements.\n",
+    "3. In your code:\n",
+    "   - Use the `requests` library to send a **GET** request to the website.\n",
+    "   - Store the **HTML content** (i.e., the `.text` of the response) in a variable named `ans1`.\n",
+    "\n",
+    "> 🧪 **Autograder Check**  \n",
+    "> The autograder will check if the variable `ans1` contains the raw HTML content returned from `https://www.epicurious.com`.\n",
+    "\n",
+    "---\n",
+    "\n",
+    "**Expected Output Example** (first 100 characters of `ans1`):\n",
+    "```html\n",
+    "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width...\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "nbgrader": {
+     "checksum": "ae909841802a0640f5ee8cdd7008c70c",
+     "grade": false,
+     "grade_id": "Class1_Ans",
+     "locked": false,
+     "schema_version": 1,
+     "solution": true
+    }
+   },
+   "outputs": [],
+   "source": [
+    "import requests\n",
+    "\n",
+    "ans1 = None\n",
+    "url = \"https://www.epicurious.com/\"\n",
+    "# YOUR CODE HERE\n",
+    "raise NotImplementedError()\n",
+    "# Answer test\n",
+    "print(ans1[:1000000])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "5baa5621af6f9e461cae29b579e9a2a1",
+     "grade": true,
+     "grade_id": "Class1_Tests",
+     "locked": true,
+     "points": 3,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "3110a11c75897fce0d0f3b3a628fdb3a",
+     "grade": false,
+     "grade_id": "Q2_Description",
+     "locked": true,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "source": [
+    "###### [Back to top](#Index:) \n",
+    "\n",
+    "### Question 2: Parse HTML Using BeautifulSoup\n",
+    "\n",
+    "Now that you have the raw HTML content, it's time to parse it using **BeautifulSoup**.\n",
+    "\n",
+    "#### Instructions\n",
+    "\n",
+    "1. Use the `BeautifulSoup` class from the `bs4` library to parse the HTML stored in `ans1`.\n",
+    "2. Create a BeautifulSoup object and assign it to a variable named `soup`.\n",
+    "3. Use the `.prettify()` method to print the parsed HTML in a readable format.\n",
+    "\n",
+    "> This helps confirm that the structure of the parsed HTML matches what you see in your browser when inspecting the page.\n",
+    "\n",
+    "---\n",
+    "\n",
+    "**Expected Behavior**\n",
+    "- The variable `soup` should contain a valid `BeautifulSoup` object.\n",
+    "- The output of `print(soup.prettify()[:1000000])` should closely resemble the HTML source of the page.\n",
+    "\n",
+    "> **Autograder Check**\n",
+    "> The autograder will validate that:\n",
+    "> - `soup` is a `BeautifulSoup` object initialized with the content of `ans1`.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "nbgrader": {
+     "checksum": "3ba7e63202bf9fa2ef7355969f8ad8e8",
+     "grade": false,
+     "grade_id": "Class2_Ans",
+     "locked": false,
+     "schema_version": 1,
+     "solution": true
+    }
+   },
+   "outputs": [],
+   "source": [
+    "from bs4 import BeautifulSoup\n",
+    "\n",
+    "soup = None\n",
+    "# YOUR CODE HERE\n",
+    "raise NotImplementedError()\n",
+    "# Answer test\n",
+    "print(soup.prettify()[:1000000])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "5b59cfe33cd94e4d62af3cb984f50708",
+     "grade": true,
+     "grade_id": "Class2_Tests",
+     "locked": true,
+     "points": 3,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "67740474c04f084e0c43190389476d7d",
+     "grade": false,
+     "grade_id": "Q3_Description",
+     "locked": true,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "source": [
+    "###### [Back to top](#Index:) \n",
+    "\n",
+    "### Question 3: Extract the Page Title\n",
+    "\n",
+    "Let’s extract the **title of the web page** using BeautifulSoup.\n",
+    "\n",
+    "#### Instructions\n",
+    "\n",
+    "1. Use the `.find()` method of the `BeautifulSoup` object `soup` to locate the `<title>` tag.\n",
+    "2. Assign the resulting tag (including its content) to a variable named `ans3`.\n",
+    "3. Print `ans3` to verify that it correctly captures the page title.\n",
+    "\n",
+    "> The `<title>` tag usually contains the text shown in the browser tab and is located within the `<head>` section of the HTML.\n",
+    "\n",
+    "---\n",
+    "\n",
+    "**Expected Output Example**\n",
+    "```html\n",
+    "<title>Epicurious – Recipes, Menu Ideas, Videos &amp; Cooking Tips | Epicurious</title>\n",
+    "```\n",
+    "\n",
+    "**Note:** `&amp;` or `&` are both fine."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "nbgrader": {
+     "checksum": "5c3f2f85c537e1f508d0eaf68098c6eb",
+     "grade": false,
+     "grade_id": "Class3_Ans",
+     "locked": false,
+     "schema_version": 1,
+     "solution": true
+    }
+   },
+   "outputs": [],
+   "source": [
+    "ans3 = None\n",
+    "# YOUR CODE HERE\n",
+    "raise NotImplementedError()\n",
+    "# Answer test\n",
+    "print(ans3)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "e7106d8f40c3947ace53b0be322d5091",
+     "grade": true,
+     "grade_id": "Class3_Tests",
+     "locked": true,
+     "points": 3,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "e9fc7fd30f23a5f22695cb148babbfba",
+     "grade": false,
+     "grade_id": "Q4_Description",
+     "locked": true,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "source": [
+    "###### [Back to top](#Index:) \n",
+    "\n",
+    "### Question 4: Extract All Hyperlinks\n",
+    "\n",
+    "In this task, you will extract all the hyperlinks (`<a>` tags) from the page.\n",
+    "\n",
+    "#### Instructions\n",
+    "\n",
+    "1. Use the `.find_all()` method of your `BeautifulSoup` object (`soup`) to find **all** `<a>` tags on the page.\n",
+    "2. Assign the result (a list of all anchor tags) to a variable named `ans4`.\n",
+    "3. Print `ans4` to visually inspect the list of hyperlinks and compare them with what you see in the website’s HTML.\n",
+    "\n",
+    "> Each `<a>` tag typically contains an `href` attribute which holds the actual link.\n",
+    "\n",
+    "---\n",
+    "\n",
+    "**Expected Output Example**\n",
+    "A portion of the printed list might look like this:\n",
+    "```html\n",
+    "[<a aria-controls=\"main-navigation\" class=\"show-main-navigation\"...]\n",
+    "```\n",
+    "\n",
+    "**Hint**: Use **`soup.find_all`**."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "nbgrader": {
+     "checksum": "276fb3ea21b4296595a5045ddafecb60",
+     "grade": false,
+     "grade_id": "Class4_Ans",
+     "locked": false,
+     "schema_version": 1,
+     "solution": true
+    }
+   },
+   "outputs": [],
+   "source": [
+    "ans4 = None\n",
+    "# YOUR CODE HERE\n",
+    "raise NotImplementedError()\n",
+    "# Answer test\n",
+    "print(ans4)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "635b523b9d468a457140ac153847786f",
+     "grade": true,
+     "grade_id": "Class4_Test",
+     "locked": true,
+     "points": 3,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "c0a808e73ec0a668d6817005927f92a3",
+     "grade": false,
+     "grade_id": "Q5_Description",
+     "locked": true,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "source": [
+    "###### [Back to top](#Index:) \n",
+    "\n",
+    "### Question 5: Locate Recipe Cards by Tag and Class\n",
+    "\n",
+    "Now that you’ve explored the page’s structure, you’ll focus on finding specific HTML elements that represent **recipe cards**. These are often located within `<article>` tags and associated with specific class names such as `\"recipe-of-the-day\"` (or similar — inspect to confirm).\n",
+    "\n",
+    "#### Instructions\n",
+    "\n",
+    "1. Inspect the web page and search the HTML for tags related to **recipes**. Look for `article` tags with meaningful `class` attributes (e.g., `class=\"recipe-content-card\"` or similar).\n",
+    "2. Use `soup.find_all()` to locate all such `article` tags with the relevant class.\n",
+    "3. Assign the result (a list of matching article elements) to a variable named `ans5`.\n",
+    "4. Print `ans5` to view the raw HTML snippets retrieved.\n",
+    "\n",
+    "```python\n",
+    "soup.find_all('...', class_='...')\n",
+    "```\n",
+    "\n",
+    "**Note:** Use `class_` (with underscore) instead of `class`, as `class` is a reserved keyword in Python.\n",
+    "\n",
+    "**Expected Output** A list of `<article>` elements containing recipe data. It may be empty if there are no recipe of the day."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "nbgrader": {
+     "checksum": "a425d05e6ce1533d4f99ce8020faac15",
+     "grade": false,
+     "grade_id": "Class5_Ans",
+     "locked": false,
+     "schema_version": 1,
+     "solution": true
+    }
+   },
+   "outputs": [],
+   "source": [
+    "ans5 = None\n",
+    "# YOUR CODE HERE\n",
+    "raise NotImplementedError()\n",
+    "# Answer test\n",
+    "print(ans5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "nbgrader": {
+     "checksum": "1fed11d8f3b150b9dd08571734f4c7c4",
+     "grade": true,
+     "grade_id": "Class5_Test",
+     "locked": true,
+     "points": 3,
+     "schema_version": 1,
+     "solution": false
+    }
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
